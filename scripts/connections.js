@@ -54,3 +54,14 @@ const monsterReset = (monsterCurrentHealth, strengthIndex, defaultMonsterHealth)
     monserLevel.textContent = `Level: ${strengthIndex}`
     return monsterCurrentHealth
 }
+
+const playerLevelGained = (playerCurrentExperience, playerExperienceToLevel, playerCurrentLevel) => {
+    if (playerCurrentExperience >= playerExperienceToLevel) {
+        playerCurrentLevel++
+        playerLevel.value = playerCurrentLevel
+        playerExperience.max = playerExperienceToLevel
+        playerExperience.value = 0
+        return playerCurrentLevel
+    }
+    playerExperience.value = playerCurrentExperience
+}
