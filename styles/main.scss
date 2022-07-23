@@ -1,0 +1,202 @@
+@mixin flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+$black: #000000;
+$radius: 1rem;
+$box-shadow: 0 0.5rem 1rem rgba($black, 0.35);
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  body {
+    height: 100%;
+  }
+}
+
+.container {
+  height: 100%;
+  @include flex-row;
+  background: linear-gradient(
+    50deg,
+    #ff000062,
+    #0000ff8c,
+    #0080006c,
+    #ffff0093,
+    #ffffff88
+  );
+
+  header{
+    @include flex-row;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    a{
+      padding: 1rem;
+      text-decoration: none;
+      color: rgb(255, 0, 0);
+      margin: 0 0.12rem;
+      box-shadow: $box-shadow;
+      border-radius: $radius;
+    }
+  }
+  footer{
+    @include flex-row;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    a{
+      padding: 1rem 20%;
+      text-decoration: none;
+      color: white
+    }
+  }
+}
+
+.content{
+    @include flex-column;
+    height: 70%;
+    width: 70%;
+    box-shadow: $box-shadow;
+    border-radius: $radius;
+    position: relative;
+    user-select: none;
+    &__progress{
+        @include flex-row;
+        position: absolute;
+        left: 1rem;
+        top: 1rem;
+        box-shadow: $box-shadow;
+        border-radius: $radius;
+        padding: 0.5rem;
+        &__bars{
+            @include flex-column;
+            progress[value]{
+              -webkit-appearance: none;
+              -moz-appearance: none;
+              appearance: none;
+              border: none;
+              height: 1rem;
+              margin: 0.25rem;
+              border-radius: $radius;
+              overflow: hidden;
+            }
+          }
+          &__bar-names{
+            @include flex-column;
+            span{
+              border-radius: $radius;
+              margin: 0.25rem;
+            }
+        }
+    }
+    &__monster{
+     display: inline-block;
+     text-align: center;
+      progress{
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+          border: none;
+      }
+      &__name{
+        font-size: 1.2rem;
+      }
+      &__value-health{
+        @include flex-row;
+        progress[value]{
+          height: 2rem;
+          margin: 0.5rem;
+          border-radius: $radius;
+          overflow: hidden;
+          width: 25rem;
+          
+        }
+      }
+    }
+  &__player{
+    @include flex-column;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    box-shadow: $box-shadow;
+    border-radius: $radius;
+    padding: 0.5rem;
+    progress[value]{
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border: none;
+    }
+    &__name{
+      font-size: 1.2rem;
+    }
+    &__stats{
+      @include flex-row;
+      &__bars{
+        @include flex-column;
+        progress[value]{
+        height: 1rem;
+        margin: 0.25rem;
+        border-radius: $radius;
+        overflow: hidden;
+        &:first-child::-moz-progress-bar{
+          background: red;
+        }
+      }
+      }
+      &__names{
+        @include flex-column;
+        span{
+          margin: 0.25rem;
+        }
+      }
+    }
+  }
+  &__icons{
+    position: absolute;
+    bottom: 2rem;
+    padding: 1rem;
+    span{
+      padding: 1rem;
+      border-radius: 1rem;
+      cursor: pointer;
+      box-shadow: $box-shadow;
+      color: white;
+    }
+    &__attack__one{
+      &:hover{
+        color: blue;
+      }
+    }
+    &__attack__two{
+      &:hover{
+        color: red;
+      }
+    }
+    &__spell__one{
+      &:hover{
+        color: green;
+      }
+    }
+    &__spell__two{
+      &:hover{
+        color: yellow;
+      }
+    }
+  }
+}

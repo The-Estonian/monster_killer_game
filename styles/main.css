@@ -1,0 +1,207 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+html body {
+  height: 100%;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(50deg, rgba(255, 0, 0, 0.3843137255), rgba(0, 0, 255, 0.5490196078), rgba(0, 128, 0, 0.4235294118), rgba(255, 255, 0, 0.5764705882), rgba(255, 255, 255, 0.5333333333));
+}
+.container header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  top: 0;
+}
+.container header a {
+  padding: 1rem;
+  text-decoration: none;
+  color: rgb(255, 0, 0);
+  margin: 0 0.12rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.35);
+  border-radius: 1rem;
+}
+.container footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+.container footer a {
+  padding: 1rem 20%;
+  text-decoration: none;
+  color: white;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70%;
+  width: 70%;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.35);
+  border-radius: 1rem;
+  position: relative;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.content__progress {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.35);
+  border-radius: 1rem;
+  padding: 0.5rem;
+}
+.content__progress__bars {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.content__progress__bars progress[value] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  height: 1rem;
+  margin: 0.25rem;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.content__progress__bar-names {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.content__progress__bar-names span {
+  border-radius: 1rem;
+  margin: 0.25rem;
+}
+.content__monster {
+  display: inline-block;
+  text-align: center;
+}
+.content__monster progress {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+}
+.content__monster__name {
+  font-size: 1.2rem;
+}
+.content__monster__value-health {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.content__monster__value-health progress[value] {
+  height: 2rem;
+  margin: 0.5rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  width: 25rem;
+}
+.content__player {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.35);
+  border-radius: 1rem;
+  padding: 0.5rem;
+}
+.content__player progress[value] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+}
+.content__player__name {
+  font-size: 1.2rem;
+}
+.content__player__stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.content__player__stats__bars {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.content__player__stats__bars progress[value] {
+  height: 1rem;
+  margin: 0.25rem;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.content__player__stats__bars progress[value]:first-child::-moz-progress-bar {
+  background: red;
+}
+.content__player__stats__names {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.content__player__stats__names span {
+  margin: 0.25rem;
+}
+.content__icons {
+  position: absolute;
+  bottom: 2rem;
+  padding: 1rem;
+}
+.content__icons span {
+  padding: 1rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.35);
+  color: white;
+}
+.content__icons__attack__one:hover {
+  color: blue;
+}
+.content__icons__attack__two:hover {
+  color: red;
+}
+.content__icons__spell__one:hover {
+  color: green;
+}
+.content__icons__spell__two:hover {
+  color: yellow;
+}/*# sourceMappingURL=main.css.map */
