@@ -1,28 +1,43 @@
 console.log("Game logic connected!");
 
-let defaultMonsterHealth = 100;
-let defaultPlayerHealth = 100;
+const defaultMonsterHealth = 100
+const defaultPlayerHealth = 100
 
 let gameMonsterHealth = defaultMonsterHealth;
 let gameMonsterMinAttack = 5;
 let gameMonsterMaxAttack = 12;
-let gameMonsterLevel = 1
+let gameMonsterLevel = 1;
 
-let gamePlayerHealth = defaultPlayerHealth * 10;
-let gamePlayerExperience = 0;
+let gamePlayerHealth = defaultPlayerHealth;
 let gamePlayerLevel = 1;
+let gamePlayerExperience = 0;
+let gamePlayerExperienceToLevel = 100;
 let gamePlayerMinAttack = 20;
-let gamePlayerMaxAttack = 20;
+let gamePlayerMaxAttack = 150;
 
-let playerAttackTurn = true
+let playerAttackTurn = true;
 
 const gameLogic = () => {
-    if (winnerCheck(gameMonsterHealth, gamePlayerHealth)) {
-        gameMonsterLevel++;
-        gamePlayerExperience += gameMonsterLevel*1.1 + 50;
-        gamePlayerExperienceToLevel = 100 * gamePlayerLevel
-        gameMonsterHealth = monsterReset(gameMonsterHealth, gameMonsterLevel, defaultMonsterHealth);
-        gamePlayerLevel = playerLevelGained(gamePlayerExperience, gamePlayerExperienceToLevel, gamePlayerLevel);
+    if (gameMonsterHealth <= 0 && gamePlayerHealth > 0) {
+        gamePlayerExperience = playerExperienceGain(gamePlayerExperience, gameMonsterLevel);
+        let gamePlayerExperienceLevel = playerLevelGain(gamePlayerLevel, gamePlayerExperience, gamePlayerExperienceToLevel)
+        if (gamePlayerExperienceLevel) {
+            gamePlayerLevel = gamePlayerExperienceLevel[0]
+            gamePlayerExperience = gamePlayerExperienceLevel[1]
+            gamePlayerExperienceToLevel = gamePlayerExperienceLevel[2]
+        }
+
+        gameMonsterLevel++
+        gameMonsterHealth = monsterUpgrade(gameMonsterHealth, gameMonsterLevel, defaultMonsterHealth);
+    } else if (gameMonsterHealth > 0 && gamePlayerHealth <= 0){
+        monserLevel.textContent = "Player will resurrect in 2m";
+        playerAttackTurn = false;
+        setTimeout(() => {
+            playerAttackTurn = true;
+            monserLevel.textContent = `Level: ${gameMonsterLevel}`;
+            gamePlayerHealth = playerHealthReset(gamePlayerHealth);
+            gameMonsterHealth = monsterHealthReset(gameMonsterHealth)
+        }, 1200); 
     }
 }
 
@@ -30,10 +45,11 @@ firstAttack.addEventListener('click', (e) => {
     if (playerAttackTurn) {
         gameMonsterHealth = playerAttackMonster(gameMonsterHealth, gamePlayerMinAttack, gamePlayerMaxAttack);
         playerAttackTurn = false;
-        gameLogic()            
+        gameLogic();        
         setTimeout(() => {
-            gamePlayerHealth = monsterAttackPlayer(gamePlayerHealth, gameMonsterMinAttack, gameMonsterMaxAttack)
-            playerAttackTurn = true
-          }, 1000);    
-        };
+            gamePlayerHealth = monsterAttackPlayer(gamePlayerHealth, gameMonsterMinAttack, gameMonsterMaxAttack);
+            playerAttackTurn = true;
+            gameLogic();
+          }, 1000);  
+    };
 });

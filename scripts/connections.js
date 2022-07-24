@@ -36,17 +36,7 @@ const monsterAttackPlayer = (playerCurrentHealth, minMonsterAttack, maxMonsterAt
     return playerCurrentHealth
 }
 
-const winnerCheck = (monsterCurrentHealth, playerCurrentHealth) => {
-    if (monsterCurrentHealth <= 0 && playerCurrentHealth > 0) {
-        return true
-    } else if (monsterCurrentHealth > 0 && playerCurrentHealth <= 0){
-        return false
-    } else if (monsterCurrentHealth <= 0 && playerCurrentHealth <= 0){
-        return false
-    }
-}
-
-const monsterReset = (monsterCurrentHealth, strengthIndex, defaultMonsterHealth) => {
+const monsterUpgrade = (monsterCurrentHealth, strengthIndex, defaultMonsterHealth) => {
     monsterCurrentHealth = defaultMonsterHealth
     monsterCurrentHealth = Math.trunc(monsterCurrentHealth * strengthIndex * 1.65/2)
     monsterHealth.value = monsterCurrentHealth
@@ -55,13 +45,47 @@ const monsterReset = (monsterCurrentHealth, strengthIndex, defaultMonsterHealth)
     return monsterCurrentHealth
 }
 
-const playerLevelGained = (playerCurrentExperience, playerExperienceToLevel, playerCurrentLevel) => {
-    if (playerCurrentExperience >= playerExperienceToLevel) {
-        playerCurrentLevel++
-        playerLevel.value = playerCurrentLevel
-        playerExperience.max = playerExperienceToLevel
-        playerExperience.value = 0
-        return playerCurrentLevel
-    }
-    playerExperience.value = playerCurrentExperience
+
+const playerExperienceToLevel = (playerLevel) => {
+    playerCurrentExperienceToLevel = playerLevel * 100 * 1.13
+    playerExperience.max = playerCurrentExperienceToLevel
+    return playerCurrentExperienceToLevel
 }
+
+const playerLevelGain = (playerLevel, playerCurrentExperience, playerExperienceUntillLevel) => {
+    if (playerCurrentExperience > playerExperienceUntillLevel) {
+        playerLevel++
+        experienceOvercap = playerCurrentExperience - playerExperienceUntillLevel
+        playerSetExperience(experienceOvercap)
+        playerSetLevel(playerLevel)
+        let playerNewExperienceToLevel = playerExperienceToLevel(playerLevel)
+        return [playerLevel, experienceOvercap, playerNewExperienceToLevel]
+    }
+}
+
+const playerSetLevel = (playerNewLevel) => {
+    playerLevel.value = playerNewLevel
+}
+
+const playerSetExperience = (currentExperience) => {
+    playerExperience.value = currentExperience
+}
+
+const playerExperienceGain = (experienceHad, monsterLevel) => {
+    experienceGained = Math.trunc(100 * monsterLevel * 1.65/2)
+    experienceHad += experienceGained
+    playerSetExperience(experienceHad)
+    return experienceHad
+}
+
+const playerHealthReset = () => {
+    playerHealth.value = playerHealth.max
+    return playerHealth.max
+}
+
+const monsterHealthReset = () => {
+    monsterHealth.value = monsterHealth.max
+    return monsterHealth.max
+}
+
+
