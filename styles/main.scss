@@ -14,6 +14,7 @@
 $black: #000000;
 $radius: 1rem;
 $box-shadow: 0 0.5rem 1rem rgba($black, 0.35);
+$font-size: 1.2rem;
 
 * {
   margin: 0;
@@ -90,8 +91,8 @@ html {
               -moz-appearance: none;
               appearance: none;
               border: none;
-              height: 1rem;
-              margin: 0.25rem;
+              height: 2rem;
+              margin: 0.3rem;
               border-radius: $radius;
               overflow: hidden;
             }
@@ -100,8 +101,30 @@ html {
             @include flex-column;
             span{
               border-radius: $radius;
-              margin: 0.25rem;
+              margin: 0.65rem;
+              font-size: $font-size;
+              
             }
+        }
+        &__addStat{
+          @include flex-column;
+          span{
+            border-radius: $radius;
+            box-shadow: $box-shadow;
+            text-align: center;
+            background: rgb(106, 175, 2);
+            border: 2px solid black;
+            margin: 0.3rem;
+            font-size: 2rem;
+            font-weight: bold;
+            width: 2rem;
+            height: 2rem;
+            color: white;
+            padding: 0.9rem;
+            padding-left: 0.3rem;
+            line-height: 0rem;
+            cursor: pointer;
+          }
         }
     }
     &__monster{
@@ -114,7 +137,7 @@ html {
           border: none;
       }
       &__name{
-        font-size: 1.2rem;
+        font-size: $font-size +1;
       }
       &__value-health{
         @include flex-row;
@@ -143,7 +166,7 @@ html {
         border: none;
     }
     &__name{
-      font-size: 1.2rem;
+      font-size: $font-size;
     }
     &__stats{
       @include flex-row;
@@ -151,7 +174,7 @@ html {
         @include flex-column;
         progress[value]{
         height: 1rem;
-        margin: 0.25rem;
+        margin: 0.4rem;
         border-radius: $radius;
         overflow: hidden;
         &:first-child::-moz-progress-bar{
@@ -163,6 +186,7 @@ html {
         @include flex-column;
         span{
           margin: 0.25rem;
+          font-size: $font-size;
         }
       }
     }

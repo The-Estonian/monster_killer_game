@@ -89,8 +89,8 @@ html body {
   -moz-appearance: none;
   appearance: none;
   border: none;
-  height: 1rem;
-  margin: 0.25rem;
+  height: 2rem;
+  margin: 0.3rem;
   border-radius: 1rem;
   overflow: hidden;
 }
@@ -102,7 +102,31 @@ html body {
 }
 .content__progress__bar-names span {
   border-radius: 1rem;
-  margin: 0.25rem;
+  margin: 0.65rem;
+  font-size: 1.2rem;
+}
+.content__progress__addStat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.content__progress__addStat span {
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.35);
+  text-align: center;
+  background: rgb(106, 175, 2);
+  border: 2px solid black;
+  margin: 0.3rem;
+  font-size: 2rem;
+  font-weight: bold;
+  width: 2rem;
+  height: 2rem;
+  color: white;
+  padding: 0.9rem;
+  padding-left: 0.3rem;
+  line-height: 0rem;
+  cursor: pointer;
 }
 .content__monster {
   display: inline-block;
@@ -115,7 +139,7 @@ html body {
   border: none;
 }
 .content__monster__name {
-  font-size: 1.2rem;
+  font-size: 2.2rem;
 }
 .content__monster__value-health {
   display: flex;
@@ -165,7 +189,7 @@ html body {
 }
 .content__player__stats__bars progress[value] {
   height: 1rem;
-  margin: 0.25rem;
+  margin: 0.4rem;
   border-radius: 1rem;
   overflow: hidden;
 }
@@ -180,6 +204,7 @@ html body {
 }
 .content__player__stats__names span {
   margin: 0.25rem;
+  font-size: 1.2rem;
 }
 .content__icons {
   position: absolute;
