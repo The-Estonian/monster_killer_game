@@ -241,6 +241,7 @@ html body {
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  text-align: center;
 }
 .content__log::-webkit-scrollbar {
   display: none;

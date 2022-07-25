@@ -28,8 +28,10 @@ let fightLog = [];
 
 const PLAYER_NORMAL_ATTACK = 'Normal Attack';
 const PLAYER_CRITICAL_ATTACK = 'Critical Attack';
-const PLAYER_ATTACK = 'Player hits monster with <br>';
-const MONSTER_ATTACK = 'Monster hits player with ';
+const PLAYER_HEAL_SPELL = 'Heal spell';
+const PLAYER_HEALS = 'Player heals with';
+const PLAYER_ATTACK = 'Player attacks with';
+const MONSTER_ATTACK = 'Monster attacks with';
 const MONSTER_NORMAL_ATTACK = 'Normal Attack';
 
 const writeToFightLog = (attacker, attackType, attackValue) => {
@@ -51,7 +53,11 @@ const writeToFightLog = (attacker, attackType, attackValue) => {
     let dataClusterAttackValue = document.createElement('td');
     dataClusterAttackValue.innerHTML = fightLog[i].attackValue;
     let dataClusterDamage = document.createElement('td');
-    dataClusterDamage.innerHTML = 'damage';
+    if (dataClusterAttacker.innerHTML === PLAYER_ATTACK || dataClusterAttacker.innerHTML === MONSTER_ATTACK) {
+      dataClusterDamage.innerHTML = 'damage';
+    } else if (dataClusterAttacker.innerHTML === PLAYER_HEALS) {
+      dataClusterDamage.innerHTML = 'hitpoints';
+    };
     dataCluster.appendChild(dataClusterAttacker);
     dataCluster.appendChild(dataClusterAttack);
     dataCluster.appendChild(dataClusterFor);
@@ -144,7 +150,7 @@ criticalAttack.addEventListener('click', (e) => {
       gamePlayerMinAttack,
       gamePlayerMaxAttack
     );
-    if (attackCriticalChance(playerCriticalChance+20)) {
+    if (attackCriticalChance(playerCriticalChance + 20)) {
       playerAttackMonsterValues[0] -= playerAttackMonsterValues[1];
       playerAttackMonsterValues[1] *= 2;
     }
@@ -174,6 +180,29 @@ criticalAttack.addEventListener('click', (e) => {
   }
 });
 
+healSpell.addEventListener('click', (e) => {
+  playerHealthHealValue = playerHealSpell(gamePlayerHealth, gamePlayerIntelligence)
+  gamePlayerHealth = playerHealthHealValue[0]
+  writeToFightLog(PLAYER_HEALS, PLAYER_HEAL_SPELL, playerHealthHealValue[1]);
+  playerAttackTurn = false;
+  gameLogic();
+    setTimeout(() => {
+      monsterAttackPlayerValues = monsterAttackPlayer(
+        gamePlayerHealth,
+        gameMonsterMinAttack,
+        gameMonsterMaxAttack
+      );
+      gamePlayerHealth = monsterAttackPlayerValues[0];
+      writeToFightLog(
+        MONSTER_ATTACK,
+        MONSTER_NORMAL_ATTACK,
+        monsterAttackPlayerValues[1]
+      );
+      playerAttackTurn = true;
+      gameLogic();
+    }, 1000);
+});
+
 strengthBarButton.addEventListener('click', (e) => {
   gamePlayerStrength = addStrength(gamePlayerStrength);
   let newDamageVariables = newDamage(gamePlayerStrength, gamePlayerLevel);
@@ -188,7 +217,7 @@ constitutionBarButton.addEventListener('click', (e) => {
 
 dexterityBarButton.addEventListener('click', (e) => {
   gamePlayerDexterity = addDexterity(gamePlayerDexterity);
-  playerCriticalChance = newCritRate(gamePlayerDexterity, gamePlayerLevel)
+  playerCriticalChance = newCritRate(gamePlayerDexterity, gamePlayerLevel);
 });
 
 intelligenceBarButton.addEventListener('click', (e) => {

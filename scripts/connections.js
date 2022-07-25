@@ -144,6 +144,18 @@ const monsterHealthReset = () => {
   return monsterHealth.max;
 };
 
+const playerHealSpell = (playerCurrentHealth, intelligence) => {
+    playerHealSpellValue = 25 + intelligence
+    console.log(playerHealSpell);
+    if (playerHealth.value + playerHealSpellValue > playerHealth.max) {
+        playerHealth.value = playerHealth.max
+        playerCurrentHealth = playerHealth.max
+    } else {
+        playerHealth.value += playerHealSpellValue
+    }
+    return [playerCurrentHealth, playerHealSpellValue]
+}
+
 const addStrength = (currentStrength) => {
   currentStrength++;
   strengthBar.value = currentStrength;
