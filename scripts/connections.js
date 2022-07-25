@@ -28,10 +28,14 @@ const logTable = document.getElementById('logTable');
 const logTableRow = document.createElement('tr');
 const logTableCol = document.createElement('td');
 
-const attackCriticalChance = (raiseCrit) => {
+const attackCriticalChance = (raiseCrit = 0) => {
   roll = Math.floor(Math.random() * 100);
-  if (roll >= 50) {
-    console.log('Crit!');
+  critValue = 100 - (raiseCrit + 10);
+  console.log(critValue);
+  if (roll >= critValue) {
+    return true;
+  } else {
+    return false;
   }
 };
 
@@ -42,6 +46,17 @@ const randomiseAttack = (minAttack, maxAttack) => {
 };
 
 const playerAttackMonster = (
+  monsterCurrentHealth,
+  minPlayerAttack,
+  maxPlayerAttack
+) => {
+  let playerAttackValue = randomiseAttack(minPlayerAttack, maxPlayerAttack);
+  monsterCurrentHealth -= playerAttackValue;
+  monsterHealth.value = monsterCurrentHealth;
+  return [monsterCurrentHealth, playerAttackValue];
+};
+
+const playerSpecialAttackMonster = (
   monsterCurrentHealth,
   minPlayerAttack,
   maxPlayerAttack
@@ -156,6 +171,11 @@ const addDexterity = (currentDexterity) => {
   currentDexterity++;
   dexterityBar.value = currentDexterity;
   return currentDexterity;
+};
+
+const newCritRate = (dexterity, level) => {
+  playerNewCritRate = level + dexterity - 2;
+  return playerNewCritRate;
 };
 
 const addIntelligence = (currentIntelligence) => {
