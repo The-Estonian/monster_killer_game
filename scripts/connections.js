@@ -20,18 +20,15 @@ const monserName = document.getElementById('monserName');
 const monserLevel = document.getElementById('monserLevel');
 
 const firstAttack = document.getElementById('firstAttack');
-const secondAttack = document.getElementById('secondAttack');
-const firstSpell = document.getElementById('firstSpell');
+const criticalAttack = document.getElementById('criticalAttack');
+const healSpell = document.getElementById('healSpell');
 const secondSpell = document.getElementById('secondSpell');
 
 const logTable = document.getElementById('logTable');
-const logTableRow = document.createElement('tr');
-const logTableCol = document.createElement('td');
 
 const attackCriticalChance = (raiseCrit = 0) => {
   roll = Math.floor(Math.random() * 100);
   critValue = 100 - (raiseCrit + 10);
-  console.log(critValue);
   if (roll >= critValue) {
     return true;
   } else {
@@ -126,6 +123,10 @@ const playerSetHealth = (playerNewHealthCap) => {
   playerHealth.max = playerNewHealthCap;
 };
 
+const playerSetMana = (playerNewManaCap) => {
+    playerMana.max = playerNewManaCap;
+  };
+
 const playerExperienceGain = (experienceHad, monsterLevel) => {
   experienceGained = Math.trunc((100 * monsterLevel * 1.65) / 2);
   experienceHad += experienceGained;
@@ -135,7 +136,7 @@ const playerExperienceGain = (experienceHad, monsterLevel) => {
 
 const playerHealthReset = () => {
   playerHealth.value = playerHealth.max;
-  return playerHealth.max;
+  return playerHealth.value;
 };
 
 const monsterHealthReset = () => {
@@ -185,6 +186,7 @@ const addIntelligence = (currentIntelligence) => {
 };
 
 const newMana = (intelligence, level) => {
-  playerNewMana = level * 5 + intelligence * 5 + 10;
+  playerNewMana = (level*2) + (intelligence*2) + 100 - 4;
+  playerSetMana(playerNewMana)
   return playerNewMana;
 };

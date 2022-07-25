@@ -27,7 +27,7 @@ let playerAttackTurn = true;
 let fightLog = [];
 
 const PLAYER_NORMAL_ATTACK = 'Normal Attack';
-const PLAYER_SECIAL_ATTACK = 'Special Attack';
+const PLAYER_CRITICAL_ATTACK = 'Critical Attack';
 const PLAYER_ATTACK = 'Player hits monster with <br>';
 const MONSTER_ATTACK = 'Monster hits player with ';
 const MONSTER_NORMAL_ATTACK = 'Normal Attack';
@@ -78,6 +78,7 @@ const gameLogic = () => {
       gamePlayerExperience = gamePlayerExperienceLevel[1];
       gamePlayerExperienceToLevel = gamePlayerExperienceLevel[2];
       newHealth(gamePlayerConstitution, gamePlayerLevel);
+      newMana(gamePlayerIntelligence, gamePlayerLevel);
     }
 
     gameMonsterLevel++;
@@ -136,7 +137,7 @@ firstAttack.addEventListener('click', (e) => {
   }
 });
 
-secondAttack.addEventListener('click', (e) => {
+criticalAttack.addEventListener('click', (e) => {
   if (playerAttackTurn) {
     playerAttackMonsterValues = playerAttackMonster(
       gameMonsterHealth,
@@ -150,7 +151,7 @@ secondAttack.addEventListener('click', (e) => {
     gameMonsterHealth = playerAttackMonsterValues[0];
     writeToFightLog(
       PLAYER_ATTACK,
-      PLAYER_SECIAL_ATTACK,
+      PLAYER_CRITICAL_ATTACK,
       playerAttackMonsterValues[1]
     );
     playerAttackTurn = false;
