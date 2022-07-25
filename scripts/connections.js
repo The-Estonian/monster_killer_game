@@ -1,4 +1,4 @@
-console.log("DOM connector connected!");
+console.log('DOM connector connected!');
 
 const strengthBar = document.getElementById('strengthBar');
 const constitutionBar = document.getElementById('constitutionBar');
@@ -24,125 +24,147 @@ const secondAttack = document.getElementById('secondAttack');
 const firstSpell = document.getElementById('firstSpell');
 const secondSpell = document.getElementById('secondSpell');
 
-const attackCriticalChance = (raiseCrit) => {
-    roll = Math.floor(Math.random() * 100);
-    if (roll >= 50) {
-        console.log("Crit!");
-    }
-}
+const logTable = document.getElementById('logTable');
+const logTableRow = document.createElement('tr');
+const logTableCol = document.createElement('td');
 
-const randomiseAttack = (minAttack, maxAttack) => {
-    let attackValue = Math.floor(Math.random() * (maxAttack - minAttack)) + minAttack
-    return attackValue
+const attackCriticalChance = (raiseCrit) => {
+  roll = Math.floor(Math.random() * 100);
+  if (roll >= 50) {
+    console.log('Crit!');
+  }
 };
 
-const playerAttackMonster = (monsterCurrentHealth, minPlayerAttack, maxPlayerAttack) => {
-    monsterCurrentHealth -= randomiseAttack(minPlayerAttack, maxPlayerAttack)
-    monsterHealth.value = monsterCurrentHealth
-    return monsterCurrentHealth
-}
+const randomiseAttack = (minAttack, maxAttack) => {
+  let attackValue =
+    Math.floor(Math.random() * (maxAttack - minAttack)) + minAttack;
+  return attackValue;
+};
 
-const monsterAttackPlayer = (playerCurrentHealth, minMonsterAttack, maxMonsterAttack) => {
-    playerCurrentHealth -= randomiseAttack(minMonsterAttack, maxMonsterAttack)
-    playerHealth.value = playerCurrentHealth
-    return playerCurrentHealth
-}
+const playerAttackMonster = (
+  monsterCurrentHealth,
+  minPlayerAttack,
+  maxPlayerAttack
+) => {
+  let playerAttackValue = randomiseAttack(minPlayerAttack, maxPlayerAttack);
+  monsterCurrentHealth -= playerAttackValue;
+  monsterHealth.value = monsterCurrentHealth;
+  return [monsterCurrentHealth, playerAttackValue];
+};
 
-const monsterUpgrade = (monsterCurrentHealth, strengthIndex, defaultMonsterHealth) => {
-    monsterCurrentHealth = defaultMonsterHealth
-    monsterCurrentHealth = Math.trunc(monsterCurrentHealth * strengthIndex * 1.65/2)
-    monsterHealth.value = monsterCurrentHealth
-    monsterHealth.max = monsterCurrentHealth
-    monserLevel.textContent = `Level: ${strengthIndex}`
-    return monsterCurrentHealth
-}
+const monsterAttackPlayer = (
+  playerCurrentHealth,
+  minMonsterAttack,
+  maxMonsterAttack
+) => {
+  let monsterAttackValue = randomiseAttack(minMonsterAttack, maxMonsterAttack);
+  playerCurrentHealth -= monsterAttackValue;
+  playerHealth.value = playerCurrentHealth;
+  return [playerCurrentHealth, monsterAttackValue];
+};
 
+const monsterUpgrade = (
+  monsterCurrentHealth,
+  strengthIndex,
+  defaultMonsterHealth
+) => {
+  monsterCurrentHealth = defaultMonsterHealth;
+  monsterCurrentHealth = Math.trunc(
+    (monsterCurrentHealth * strengthIndex * 1.65) / 2
+  );
+  monsterHealth.value = monsterCurrentHealth;
+  monsterHealth.max = monsterCurrentHealth;
+  monserLevel.textContent = `Level: ${strengthIndex}`;
+  return monsterCurrentHealth;
+};
 
 const playerExperienceToLevel = (playerLevel) => {
-    playerCurrentExperienceToLevel = playerLevel * 100 * 1.13
-    playerExperience.max = playerCurrentExperienceToLevel
-    return playerCurrentExperienceToLevel
-}
+  playerCurrentExperienceToLevel = playerLevel * 100 * 1.13;
+  playerExperience.max = playerCurrentExperienceToLevel;
+  return playerCurrentExperienceToLevel;
+};
 
-const playerLevelGain = (playerLevel, playerCurrentExperience, playerExperienceUntillLevel) => {
-    if (playerCurrentExperience > playerExperienceUntillLevel) {
-        playerLevel++
-        experienceOvercap = playerCurrentExperience - playerExperienceUntillLevel
-        playerSetExperience(experienceOvercap)
-        playerSetLevel(playerLevel)
-        let playerNewExperienceToLevel = playerExperienceToLevel(playerLevel)
-        return [playerLevel, experienceOvercap, playerNewExperienceToLevel]
-    }
-}
+const playerLevelGain = (
+  playerLevel,
+  playerCurrentExperience,
+  playerExperienceUntillLevel
+) => {
+  if (playerCurrentExperience > playerExperienceUntillLevel) {
+    playerLevel++;
+    experienceOvercap = playerCurrentExperience - playerExperienceUntillLevel;
+    playerSetExperience(experienceOvercap);
+    playerSetLevel(playerLevel);
+    let playerNewExperienceToLevel = playerExperienceToLevel(playerLevel);
+    return [playerLevel, experienceOvercap, playerNewExperienceToLevel];
+  }
+};
 
 const playerSetLevel = (playerNewLevel) => {
-    playerLevel.value = playerNewLevel
-}
+  playerLevel.value = playerNewLevel;
+};
 
 const playerSetExperience = (currentExperience) => {
-    playerExperience.value = currentExperience
-}
+  playerExperience.value = currentExperience;
+};
 
 const playerSetHealth = (playerNewHealthCap) => {
-    playerHealth.max = playerNewHealthCap
-}
+  playerHealth.max = playerNewHealthCap;
+};
 
 const playerExperienceGain = (experienceHad, monsterLevel) => {
-    experienceGained = Math.trunc(100 * monsterLevel * 1.65/2)
-    experienceHad += experienceGained
-    playerSetExperience(experienceHad)
-    return experienceHad
-}
+  experienceGained = Math.trunc((100 * monsterLevel * 1.65) / 2);
+  experienceHad += experienceGained;
+  playerSetExperience(experienceHad);
+  return experienceHad;
+};
 
 const playerHealthReset = () => {
-    playerHealth.value = playerHealth.max
-    return playerHealth.max
-}
+  playerHealth.value = playerHealth.max;
+  return playerHealth.max;
+};
 
 const monsterHealthReset = () => {
-    monsterHealth.value = monsterHealth.max
-    return monsterHealth.max
-}
+  monsterHealth.value = monsterHealth.max;
+  return monsterHealth.max;
+};
 
 const addStrength = (currentStrength) => {
-    currentStrength++
-    strengthBar.value = currentStrength
-    return currentStrength
-}
+  currentStrength++;
+  strengthBar.value = currentStrength;
+  return currentStrength;
+};
 
 const newDamage = (strength, level) => {
-    playerMinAttack = level + (strength * 2) + 10
-    playerMaxAttack = level + (strength * 3) + 15
-    return [playerMinAttack, playerMaxAttack]
-}
+  playerMinAttack = level + strength * 2 + 10;
+  playerMaxAttack = level + strength * 3 + 15;
+  return [playerMinAttack, playerMaxAttack];
+};
 
 const addConstitution = (currentConstitution) => {
-    currentConstitution++
-    constitutionBar.value = currentConstitution
-    return currentConstitution
-}
+  currentConstitution++;
+  constitutionBar.value = currentConstitution;
+  return currentConstitution;
+};
 
 const newHealth = (constitution, level) => {
-    playerNewHealth = ((level-1) * 25) + ((constitution-1) * 25) + 100
-    playerSetHealth(playerNewHealth)
-    return playerNewHealth
-}
+  playerNewHealth = (level - 1) * 25 + (constitution - 1) * 25 + 100;
+  playerSetHealth(playerNewHealth);
+  return playerNewHealth;
+};
 
 const addDexterity = (currentDexterity) => {
-    currentDexterity++
-    dexterityBar.value = currentDexterity
-    return currentDexterity
-}
+  currentDexterity++;
+  dexterityBar.value = currentDexterity;
+  return currentDexterity;
+};
 
 const addIntelligence = (currentIntelligence) => {
-    currentIntelligence++
-    intelligenceBar.value = currentIntelligence
-    return currentIntelligence
-}
+  currentIntelligence++;
+  intelligenceBar.value = currentIntelligence;
+  return currentIntelligence;
+};
 
 const newMana = (intelligence, level) => {
-    playerNewMana = (level * 5) + (intelligence * 5) + 10
-    return playerNewMana
-}
-
-
+  playerNewMana = level * 5 + intelligence * 5 + 10;
+  return playerNewMana;
+};
