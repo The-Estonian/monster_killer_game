@@ -120,7 +120,10 @@ const playerSetExperience = (currentExperience) => {
 };
 
 const playerSetHealth = (playerNewHealthCap) => {
+  healthDifference = playerNewHealthCap - playerHealth.max;
+  console.log(healthDifference);
   playerHealth.max = playerNewHealthCap;
+  playerHealth.value += healthDifference;
 };
 
 const playerSetMana = (playerNewManaCap) => {

@@ -26,15 +26,15 @@ let playerAttackTurn = true;
 
 let fightLog = [];
 
-const PLAYER_NORMAL_ATTACK = 'Normal Attack';
-const PLAYER_CRITICAL_ATTACK = 'Critical Attack';
-const PLAYER_HEAL_SPELL = 'Heal spell';
+const PLAYER_NORMAL_ATTACK = '"Normal Attack"';
+const PLAYER_CRITICAL_ATTACK = '"Critical Attack"';
+const PLAYER_HEAL_SPELL = '"Heal spell"';
 const PLAYER_HEALS = 'Player heals with';
 const PLAYER_ATTACK = 'Player attacks with';
 const MONSTER_ATTACK = 'Monster attacks with';
-const MONSTER_NORMAL_ATTACK = 'Normal Attack';
+const MONSTER_NORMAL_ATTACK = '"Normal Attack"';
 
-const writeToFightLog = (attacker, attackType, attackValue) => {
+const writeToFightLog = (attacker, attackType, attackValue, crit = false) => {
   let logEntry = {
     attacker: attacker,
     attackType: attackType,
@@ -53,11 +53,14 @@ const writeToFightLog = (attacker, attackType, attackValue) => {
     let dataClusterAttackValue = document.createElement('td');
     dataClusterAttackValue.innerHTML = fightLog[i].attackValue;
     let dataClusterDamage = document.createElement('td');
-    if (dataClusterAttacker.innerHTML === PLAYER_ATTACK || dataClusterAttacker.innerHTML === MONSTER_ATTACK) {
+    if (
+      dataClusterAttacker.innerHTML === PLAYER_ATTACK ||
+      dataClusterAttacker.innerHTML === MONSTER_ATTACK
+    ) {
       dataClusterDamage.innerHTML = 'damage';
     } else if (dataClusterAttacker.innerHTML === PLAYER_HEALS) {
       dataClusterDamage.innerHTML = 'hitpoints';
-    };
+    }
     dataCluster.appendChild(dataClusterAttacker);
     dataCluster.appendChild(dataClusterAttack);
     dataCluster.appendChild(dataClusterFor);
@@ -112,10 +115,6 @@ firstAttack.addEventListener('click', (e) => {
       gamePlayerMinAttack,
       gamePlayerMaxAttack
     );
-    if (attackCriticalChance(playerCriticalChance)) {
-      playerAttackMonsterValues[0] -= playerAttackMonsterValues[1];
-      playerAttackMonsterValues[1] *= 2;
-    }
 
     gameMonsterHealth = playerAttackMonsterValues[0];
     writeToFightLog(
@@ -144,6 +143,7 @@ firstAttack.addEventListener('click', (e) => {
 });
 
 criticalAttack.addEventListener('click', (e) => {
+  let criticalSuccess = false;
   if (playerAttackTurn) {
     playerAttackMonsterValues = playerAttackMonster(
       gameMonsterHealth,
@@ -153,12 +153,14 @@ criticalAttack.addEventListener('click', (e) => {
     if (attackCriticalChance(playerCriticalChance + 20)) {
       playerAttackMonsterValues[0] -= playerAttackMonsterValues[1];
       playerAttackMonsterValues[1] *= 2;
+      criticalSuccess = true;
     }
     gameMonsterHealth = playerAttackMonsterValues[0];
     writeToFightLog(
       PLAYER_ATTACK,
       PLAYER_CRITICAL_ATTACK,
-      playerAttackMonsterValues[1]
+      playerAttackMonsterValues[1],
+      criticalSuccess
     );
     playerAttackTurn = false;
     gameLogic();
@@ -181,26 +183,29 @@ criticalAttack.addEventListener('click', (e) => {
 });
 
 healSpell.addEventListener('click', (e) => {
-  playerHealthHealValue = playerHealSpell(gamePlayerHealth, gamePlayerIntelligence)
-  gamePlayerHealth = playerHealthHealValue[0]
+  playerHealthHealValue = playerHealSpell(
+    gamePlayerHealth,
+    gamePlayerIntelligence
+  );
+  gamePlayerHealth = playerHealthHealValue[0];
   writeToFightLog(PLAYER_HEALS, PLAYER_HEAL_SPELL, playerHealthHealValue[1]);
   playerAttackTurn = false;
   gameLogic();
-    setTimeout(() => {
-      monsterAttackPlayerValues = monsterAttackPlayer(
-        gamePlayerHealth,
-        gameMonsterMinAttack,
-        gameMonsterMaxAttack
-      );
-      gamePlayerHealth = monsterAttackPlayerValues[0];
-      writeToFightLog(
-        MONSTER_ATTACK,
-        MONSTER_NORMAL_ATTACK,
-        monsterAttackPlayerValues[1]
-      );
-      playerAttackTurn = true;
-      gameLogic();
-    }, 1000);
+  setTimeout(() => {
+    monsterAttackPlayerValues = monsterAttackPlayer(
+      gamePlayerHealth,
+      gameMonsterMinAttack,
+      gameMonsterMaxAttack
+    );
+    gamePlayerHealth = monsterAttackPlayerValues[0];
+    writeToFightLog(
+      MONSTER_ATTACK,
+      MONSTER_NORMAL_ATTACK,
+      monsterAttackPlayerValues[1]
+    );
+    playerAttackTurn = true;
+    gameLogic();
+  }, 1000);
 });
 
 strengthBarButton.addEventListener('click', (e) => {

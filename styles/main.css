@@ -112,20 +112,15 @@ html body {
   align-items: center;
 }
 .content__progress__addStat span {
-  border-radius: 1rem;
+  border-radius: 50%;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.35);
   text-align: center;
-  background: rgb(106, 175, 2);
-  border: 2px solid black;
-  margin: 0.3rem;
+  background: rgb(137, 201, 41);
+  margin: 0.1rem;
   font-size: 2rem;
   font-weight: bold;
-  width: 2rem;
-  height: 2rem;
-  color: white;
-  padding: 0.9rem;
-  padding-left: 0.3rem;
-  line-height: 0rem;
+  color: rgb(0, 0, 0);
+  padding: 0 0.5rem;
   cursor: pointer;
 }
 .content__monster {
