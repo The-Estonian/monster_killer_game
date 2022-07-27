@@ -17,4 +17,11 @@ Will feature:
   * Heal spell
   * Damage spell
 
-![monster_killer_game](https://user-images.githubusercontent.com/89336239/180636704-5e1897d1-36c2-4647-b65c-e9355c737c73.jpg)
+![monster_killer_game](https://user-images.githubusercontent.com/89336239/181190675-843a2c2e-6a3c-45fd-989c-759f641f59f4.jpg)
+
+Project on hold for now, TODO:
+* Implement 2nd spell.
+* Redo fight log
+* Add numbers to all bars
+* Redo page styling
+* Add stat point restrictions after leveling
