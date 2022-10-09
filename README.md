@@ -1,4 +1,4 @@
-# Monster killer game, !currently in development!
+# Monster killer game, !currently in TODO!
 ### Simple monster killer game created to practice JS logic and refactoring.
 
 Will feature:
